@@ -40,3 +40,48 @@ class Vacancy:
                    Area - {self.area}
                    Url - {self.url}
                 '''
+
+    def salary_average(self):
+        """
+        Получает среднюю зарплату
+        :return: average salary
+        """
+        if self.salary_from:
+            if self.salary_to:
+                result = int((self.salary_to + self.salary_from) / 2)
+            else:
+                result = self.salary_from
+        else:
+            if self.salary_to:
+                result = self.salary_to
+            else:
+                result = 0
+
+        return result
+
+    @classmethod
+    def create_vacancy_from_hh(cls, vacancy_info_hh: dict):
+        """
+        Классметод конвертирует информацию о вакансии из hh и создает обьект Вакансии
+        :param vacancy_info_hh: dict with information about vacancy
+        :return: object Vacancy
+        """
+        result = {
+            "id": cls.check_for_availability(vacancy_info_hh, "id"),
+            "website": 'HeadHunter',
+            "type": cls.check_for_availability(vacancy_info_hh, "type", "name"),
+            "name": cls.check_for_availability(vacancy_info_hh, "name"),
+            "data_published": cls.check_for_availability(vacancy_info_hh, "published_at"),
+            "salary_from": cls.check_for_availability(vacancy_info_hh, "salary", "from"),
+            "salary_to": cls.check_for_availability(vacancy_info_hh, "salary", "to"),
+            "currency": cls.check_for_availability(vacancy_info_hh, "salary", "currency"),
+            "area": cls.check_for_availability(vacancy_info_hh, "area", "name"),
+            "url": cls.check_for_availability(vacancy_info_hh, "alternate_url"),
+            "employer": cls.check_for_availability(vacancy_info_hh, "employer", "name"),
+            "employer_id": cls.check_for_availability(vacancy_info_hh, "employer", "id"),
+            "employer_url": cls.check_for_availability(vacancy_info_hh, "employer", "alternate_url"),
+            "requirement": cls.check_for_availability(vacancy_info_hh, "snippet", "requirement"),
+            "experience": cls.check_for_availability(vacancy_info_hh, "experience", "name"),
+            "employment": cls.check_for_availability(vacancy_info_hh, "employment", "name")
+        }
+        return Vacancy(result)
