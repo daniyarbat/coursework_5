@@ -85,3 +85,19 @@ class Vacancy:
             "employment": cls.check_for_availability(vacancy_info_hh, "employment", "name")
         }
         return Vacancy(result)
+
+    @staticmethod
+    def check_for_availability(vacancy_information: dict, param1: str, param2: str = None, param3: str = None):
+        """
+        Метод, проверяющий доступны ли параметры вакансии
+        """
+        try:
+            if param3 is None:
+                if param2 is None:
+                    return vacancy_information[param1]
+                else:
+                    return vacancy_information[param1][param2]
+            else:
+                return vacancy_information[param1][param2][param3]
+        except Exception:
+            return None
