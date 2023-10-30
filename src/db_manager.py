@@ -44,3 +44,29 @@ class DBManager:
 
         cur.close()
         conn.close()
+
+    def create_table_vacancies(self):
+        """
+        метод, добавляющий таблицу вакансий
+        :return:
+        """
+        conn = psycopg2.connect(**self.params)
+        cur = conn.cursor()
+        cur.execute('''CREATE TABLE vacancies (
+            vacancy_id_hh integer PRIMARY KEY,
+            company_id_hh integer,
+            vacancy_name varchar(150),
+            data_published date,
+            salary_average integer,
+            area varchar(150),
+            url varchar(150),
+            requirement varchar(500),
+            experience varchar(150),
+            employment varchar(150),
+
+            CONSTRAINT fk_hh_vacancies_vacancies FOREIGN KEY(company_id_hh) REFERENCES companies(company_id_hh)
+        )''')
+        conn.commit()
+
+        cur.close()
+        conn.close()
