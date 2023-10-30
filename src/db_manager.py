@@ -10,6 +10,7 @@ class DBManager:
         self.name = database_name
         self.params = params
         self.create_database()
+        self.create_table_companies()
 
     def create_database(self):
         """
@@ -26,3 +27,20 @@ class DBManager:
         conn.close()
 
         self.params.update({'dbname': self.name})
+
+    def create_table_companies(self):
+        """
+        метод, добавляющий таблицу компаний
+        :return:
+        """
+        conn = psycopg2.connect(**self.params)
+        cur = conn.cursor()
+        cur.execute('''CREATE TABLE companies (
+            company_id_hh integer PRIMARY KEY,
+            company_name varchar(150),
+            employer_url varchar(150)
+        )''')
+        conn.commit()
+
+        cur.close()
+        conn.close()
