@@ -6,7 +6,7 @@ from src.vacancy import Vacancy
 
 def main():
 
-    database_name = 'base123'  # изменить название при повторном запуске
+    database_name = 'base'  # изменить название при повторном запуске
     file_companies_ids = 'data/companies.json'
 
     # подгрузка компаний из файла

@@ -12,6 +12,7 @@ class DBManager:
         self.params = params
         self.create_database()
         self.create_table_companies()
+        self.create_table_vacancies ()
 
     def create_database(self):
         """
